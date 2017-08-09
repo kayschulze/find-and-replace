@@ -15,7 +15,7 @@ namespace FindAndReplace.Tests
       string wordToBeReplaced = "world";
       string replacementWord = "universe";
       FindReplace className = new FindReplace(originalString, wordToBeReplaced, replacementWord);
-      string expected = "universe ";
+      string expected = "universe";
 
       string actual = className.FindAndReplace();
 
@@ -26,8 +26,26 @@ namespace FindAndReplace.Tests
     public void FindAndReplace_ReplaceOneWordInAStringOfWords_Universe()
     {
       //Arrange
-      string expected = "hello universe ";
+      string expected = "hello universe";
       string originalString = "hello world";
+      string wordToBeReplaced = "world";
+      string replacementWord = "universe";
+
+      //Act
+      FindReplace className = new FindReplace(originalString, wordToBeReplaced, replacementWord);
+      string actual = className.FindAndReplace();
+
+
+      //Assert
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void FindAndReplace_ReplaceMultipleWordInAStringOfWords_Universe()
+    {
+      //Arrange
+      string expected = "hello universe this is my universe";
+      string originalString = "hello world this is my world";
       string wordToBeReplaced = "world";
       string replacementWord = "universe";
 

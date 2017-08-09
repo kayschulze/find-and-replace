@@ -25,25 +25,26 @@ namespace FindAndReplace.Models
       char [] extrachars = {' ', '.'};
 
       _parsedWords = _originalString.Split(extrachars);
-      Console.WriteLine(_parsedWords);
 
       foreach (string word in _parsedWords)
       {
         if (word == _wordToBeReplaced)
         {
           _editedStringList.Add(_replacementWord);
+          _editedStringList.Add(" ");
         }
         else
         {
-          Console.WriteLine("Howdy!");
           _editedStringList.Add(word);
+          _editedStringList.Add(" ");
         }
       }
+
+      _editedStringList.RemoveAt(_editedStringList.Count - 1);
 
       foreach (string filteredWord in _editedStringList)
       {
         _editedString += filteredWord;
-        _editedString += " ";
       }
 
       return _editedString;
