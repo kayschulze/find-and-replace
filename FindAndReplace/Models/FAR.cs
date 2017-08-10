@@ -10,8 +10,6 @@ namespace FindAndReplace.Models
     string _wordToBeReplaced = "";
     string _editedString = "";
     List<string> _editedStringList = new List<string> {};
-    string [] _parsedWords;
-
 
     public FindReplace(string originalString, string wordToBeReplaced, string replacementWord)
     {
@@ -22,41 +20,61 @@ namespace FindAndReplace.Models
 
     public string FindAndReplace()
     {
+      int originalStringLength = _originalString.Length;
+      int wordToBeReplacedLength = _wordToBeReplaced.Length;
+      int replacementWordLength = _replacementWord.Length;
+
       char [] stringToCharacters = _originalString.ToCharArray();
-      // int _originalStringLength = stringToCharacters.Length;
-      //
-      char [] charWordToBeReplaced = _wordToBeReplaced.ToCharArray();
-      // int lengthOfWord = _charWordToBeReplaced.Length;
+      List<char> stringToCharactersList = new List<char> {};
 
-      for (int i = 0; i < _originalString.Length; i++)
+      for (int h = 0; h < originalStringLength; h++)
       {
-        if (stringToCharacters[i] == charWordToBeReplaced[0])
-        {
-          char [] wordpointer;
+        stringToCharactersList.Add(stringToCharacters[h]);
+      }
 
-          for (int j = i; j < i + _wordToBeReplaced.Length; j++)
+      char [] replacementArray = _replacementWord.ToCharArray();
+      List<char> replacementList = new List<char> {};
+
+      for (int g = 0; g < replacementWordLength; g++)
+      {
+        replacementList.Add(replacementArray[g]);
+      }
+
+      char [] charWordToBeReplaced = _wordToBeReplaced.ToCharArray();
+
+      for (int i = 0; i < originalStringLength; i++)
+      {
+        if (stringToCharactersList[i] == charWordToBeReplaced[0])
+        {
+          string wordpointer = "";
+
+          for (int j = i; j < i + wordToBeReplacedLength; j++)
           {
-            wordpointer.Add(stringToCharacters[j]);
+            wordpointer += stringToCharactersList[j];
           }
 
-          if (wordpointer == charWordToBeReplaced)
+          if (wordpointer == _wordToBeReplaced)
           {
-            int m = 0;
-            for (int k = i; k < i + _wordToBeReplaced.Length; k++)
+            int m = replacementWordLength - 1;
+            int eraseindex = i + wordToBeReplacedLength;
+            int replaceindex = i + replacementWordLength;
+
+            for (int k = i; k < eraseindex; k++)
             {
-              stringToCharacters.RemoveAt(k);
+              stringToCharactersList.RemoveAt(i);
             }
 
-            for (int l = i; l < i + _replacementWord; l++)
+            for (int l = i; l < replaceindex; l++)
             {
-              Array.insert(stringToCharacters, l, m);
-              m++;
+              stringToCharactersList.Insert(i, replacementList[m]);
+              m--;
             }
+            i += replacementWordLength;
           }
         }
       }
 
-      foreach (char character in stringToCharacters)
+      foreach (char character in stringToCharactersList)
       {
         _editedString += character;
       }
